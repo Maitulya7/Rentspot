@@ -75,9 +75,20 @@ nav {
       background-color: black;
       color: white;
       z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: px;
 
       &.active{
         right: 0; 
+      }
+
+      @include sm {
+        a{
+          display: initial;
+        }
       }
     }
   

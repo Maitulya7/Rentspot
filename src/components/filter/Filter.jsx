@@ -1,9 +1,10 @@
 import "./filter.scss";
-const Filter = () => {
+
+function Filter() {
   return (
     <div className="filter">
       <h1>
-        Seach Result for <b>Ahmedabad</b>
+        Search results for <b>London</b>
       </h1>
       <div className="top">
         <div className="item">
@@ -18,9 +19,9 @@ const Filter = () => {
       </div>
       <div className="bottom">
         <div className="item">
-          <label htmlFor="Type">Type</label>
+          <label htmlFor="type">Type</label>
           <select name="type" id="type">
-            <option value="">Any</option>
+            <option value="">any</option>
             <option value="buy">Buy</option>
             <option value="rent">Rent</option>
           </select>
@@ -28,11 +29,11 @@ const Filter = () => {
         <div className="item">
           <label htmlFor="property">Property</label>
           <select name="property" id="property">
-            <option value="">Any</option>
-            <option value="house">House</option>
+            <option value="">any</option>
             <option value="apartment">Apartment</option>
-            <option value="land">Land</option>
+            <option value="house">House</option>
             <option value="condo">Condo</option>
+            <option value="land">Land</option>
           </select>
         </div>
         <div className="item">
@@ -41,33 +42,33 @@ const Filter = () => {
             type="number"
             id="minPrice"
             name="minPrice"
-            placeholder="Any"
+            placeholder="any"
           />
         </div>
         <div className="item">
           <label htmlFor="maxPrice">Max Price</label>
           <input
-            type="number"
+            type="text"
             id="maxPrice"
             name="maxPrice"
-            placeholder="Any"
+            placeholder="any"
           />
-        </div>{" "}
+        </div>
         <div className="item">
           <label htmlFor="bedroom">Bedroom</label>
           <input
             type="text"
             id="bedroom"
             name="bedroom"
-            placeholder="Any"
+            placeholder="any"
           />
         </div>
         <button>
-          <img src="/search.png" alt="search" />
+          <img src="/search.png" alt="" />
         </button>
       </div>
     </div>
   );
-};
+}
 
 export default Filter;

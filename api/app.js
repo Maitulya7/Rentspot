@@ -2,13 +2,15 @@ import express from "express";
 
 const app = express();
 
-console.log("test1")
+app.use(express.json());
+
+import postRoute from "./routes/post.route.js";
+import authRoute from "./routes/auth.route.js";
 
 const PORT = 8800;
 
-app.use("/api/test" , (req , res) =>{
-    res.send("test")
-})
+app.use("/api/posts", postRoute);
+app.use("/api/auth", authRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

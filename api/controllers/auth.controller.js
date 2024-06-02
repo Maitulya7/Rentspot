@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import prisma from "../lib/prisma.js";
 import asyncHandler from "express-async-handler";
+import jwt from "jsonwebtoken";
+import { json } from "express";
 
 const Register = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
@@ -52,8 +54,21 @@ const Login = asyncHandler(async (req, res) => {
     throw new Error("Invalid credentials");
   }
 
- 
+  const age = 1000 * 60 * 60 * 24 * 7;
+  const token = jwt.sign(
+    {
+      id: user.id,
+    },
+    process.env.JWT_SECRET_KEY,
+    { expiresIn: age }
+  );
 
+  res.cookie("token", token, {
+    httpOnly: true,
+    maxAge: age,
+    sameSite: "none",
+    secure: true,
+  }).status(200).json({ message: "User logged in successfully", data: user });
 
 });
 

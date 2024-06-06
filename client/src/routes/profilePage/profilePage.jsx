@@ -1,8 +1,14 @@
+import axiosInstance from "../../axiosConfig";
 import Chat from "../../components/chat/Chat";
 import List from "../../components/list/List";
 import "./profilePage.scss";
 
 function ProfilePage() {
+
+  const handleLogout = () => {
+    axiosInstance.post("/auth/logout")
+  }
+
   return (
     <div className="profilePage">
       <div className="details">
@@ -25,6 +31,7 @@ function ProfilePage() {
             <span>
               E-mail: <b>john@gmail.com</b>
             </span>
+            <button onClick={handleLogout}>Logout</button>
           </div>
           <div className="title">
             <h1>My List</h1>

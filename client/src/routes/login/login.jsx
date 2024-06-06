@@ -2,27 +2,41 @@ import "./login.scss";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../axiosConfig";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 
 function Login() {
   const navigate = useNavigate();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = {
-      username: formData.get("username"),
-      password: formData.get("password"),
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      setError("");
+      setIsLoading(true);
+      const formData = new FormData(e.target);
+      const data = {
+        username: formData.get("username"),
+        password: formData.get("password"),
+      };
+      axiosInstance
+        .post("/auth/login", data , {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res);
+          setIsLoading(false);
+          localStorage.setItem("user", JSON.stringify(res.data.data));
+          navigate("/");
+
+        })
+        .catch((err) => {
+          console.log(err.message);
+          setError(err.message);
+        }).finally(()=>{
+          setIsLoading(false);
+        });
     };
-    axiosInstance
-      .post("/auth/login", data)
-      .then((res) => {
-        console.log(res);
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  };
   return (
     <div className="login">
       <div className="formContainer">
@@ -30,7 +44,8 @@ function Login() {
           <h1>Welcome back</h1>
           <input name="username" type="text" placeholder="Username" />
           <input name="password" type="password" placeholder="Password" />
-          <button>Login</button>
+          <button disabled={isLoading}>Login</button>
+          {error && <span>Invaild credential</span>}
           <Link to="/register">{"Don't"} you have an account?</Link>
         </form>
       </div>

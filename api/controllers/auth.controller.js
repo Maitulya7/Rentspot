@@ -62,13 +62,14 @@ const Login = asyncHandler(async (req, res) => {
     process.env.JWT_SECRET_KEY,
     { expiresIn: age }
   );
+  const { password: userPassword, ...userData } = user;
 
   res.cookie("token", token, {
     httpOnly: true,
     maxAge: age,
-    sameSite: "none",
+    sameSite: 'None', 
     secure: true,
-  }).status(200).json({ message: "User logged in successfully", data: user });
+  }).status(200).json({ message: "User logged in successfully", data: userData });
 
 });
 

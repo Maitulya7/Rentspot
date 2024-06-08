@@ -2,13 +2,16 @@ import "./login.scss";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../axiosConfig";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 
 function Login() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const {updateUser} = useContext(AuthContext)
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -25,13 +28,12 @@ function Login() {
         })
         .then((res) => {
           console.log(res);
-          setIsLoading(false);
-          localStorage.setItem("user", JSON.stringify(res.data.data));
+          updateUser(res.data.data);
           navigate("/");
 
         })
         .catch((err) => {
-          console.log(err.message);
+          console.log(err)
           setError(err.message);
         }).finally(()=>{
           setIsLoading(false);
